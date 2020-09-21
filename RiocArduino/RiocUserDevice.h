@@ -4,7 +4,10 @@
 #include "RiocDevice.h"
 
 // pins on aladdin 2560 board
+
+#if defined(OPT_UD_ALADDIN) && defined(__AVR_ATmega1280__) && defined(__AVR_ATmega2560__)
 #define PIN_UD_RESET 41
+#endif
 
 #define PIN_UD_DI0   22
 #define PIN_UD_DI1   23

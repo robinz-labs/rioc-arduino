@@ -201,7 +201,6 @@ void onMessageReceived(byte msg[8], byte address_from)
   } else {
 
     // rioc object control message
-
     if (msg[1]==0x00)
       setupRioc(msg, address_from);     // setup a new object
     else

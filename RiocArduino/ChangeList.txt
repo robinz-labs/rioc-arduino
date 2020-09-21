@@ -17,4 +17,9 @@ v0.20  2016/12/12
 
 v0.22  2020/05/18
 + added fixes for aladdin 2560 board
-	
+
+V0.23  2020/09/09
+! first commit to github
+
+V0.24  2020/09/22
+! fixed incorrect reset pin definition
