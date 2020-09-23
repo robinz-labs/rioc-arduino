@@ -2,6 +2,7 @@
 #include <EEPROM.h>
 #endif
 
+#include "RiocOptional.h"
 #include "RiocDevice.h"
 #include "RiocGlobal.h"
 #include "RiocSerialMessager.h"
@@ -81,10 +82,17 @@ void initRioc()
 
   // get unit id of this rioc device
   byte unitId = 1;
-  #if !defined(__SAM3X8E__)
-  unitId = EEPROM.read(0);
-  #endif
+  if (USE_FIXED_UNIT_ID == 0) {
+    
+    #if !defined(__SAM3X8E__)
+    unitId = EEPROM.read(0);
+    #endif
+  
+  } else {
+    unitId = USE_FIXED_UNIT_ID;
+  }
 
+  
   if (unitId==0 || unitId==0xff) unitId=1;
 
   // init messager

@@ -1,3 +1,10 @@
+// Every rioc device must have an unit ID that is a number between 1 ~ 254.
+// If set USE_FIXED_UNIT_ID as 0, the unit ID will be able to be reconfigurable by remote,
+// or else please set a fixed unit id number in USE_FIXED_UNIT_ID.
+
+#define USE_FIXED_UNIT_ID 0
+
+
 /*
     Optional parts can be enabled or disabled
 
@@ -33,10 +40,12 @@
 
 
 // use software tone playing 
+
 #if defined(OPT_ENABLE_IR_TRANSMITTER) || defined(OPT_ENABLE_IR_RECEIVER) || defined(__SAM3X8E__) 
 	#define OPT_SOFTWARE_TONE
 #endif
 
 
 // need enable the option if your arduino is an aladdin 2560 user device
+
 // #define OPT_UD_ALADDIN

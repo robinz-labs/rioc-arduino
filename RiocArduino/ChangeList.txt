@@ -23,3 +23,7 @@ V0.23  2020/09/09
 
 V0.24  2020/09/22
 ! fixed incorrect reset pin definition
+
+V0.25  2020/09/23
+! allow fixed unit id
+
