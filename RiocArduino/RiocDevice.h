@@ -60,7 +60,7 @@ extern RiocObject* pinObject[PIN_COUNT];
 extern bool portOccupied[PORT_COUNT];
 extern RiocObject* portObject[PORT_COUNT];
 
-void initRioc();
+void initRioc(byte unitId);
 void processRioc();
 
 RiocObject* setupRioc(byte msg[8], byte address_from);

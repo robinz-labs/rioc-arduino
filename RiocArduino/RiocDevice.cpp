@@ -51,7 +51,7 @@ void onMessageReceived(byte msg[8], byte address_from);
 //
 // initialize the rioc device 
 //
-void initRioc()
+void initRioc(byte unitId)
 {
   for (int n=0 ; n<PIN_COUNT ; n++) {
     pinOccupied[n] = false;    
@@ -81,17 +81,13 @@ void initRioc()
   portOccupied[0] = true;   // rioc messager
 
   // get unit id of this rioc device
-  byte unitId = 1;
-  if (USE_FIXED_UNIT_ID == 0) {
+  if (unitId == 0) {
     
     #if !defined(__SAM3X8E__)
     unitId = EEPROM.read(0);
     #endif
   
-  } else {
-    unitId = USE_FIXED_UNIT_ID;
-  }
-
+  } 
   
   if (unitId==0 || unitId==0xff) unitId=1;
 

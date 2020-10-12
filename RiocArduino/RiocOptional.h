@@ -1,10 +1,3 @@
-// Every rioc device must have an unit ID that is a number between 1 ~ 254.
-// If set USE_FIXED_UNIT_ID as 0, the unit ID will be able to be reconfigurable by remote,
-// or else please set a fixed unit id number in USE_FIXED_UNIT_ID.
-
-#define USE_FIXED_UNIT_ID 0
-
-
 /*
     Optional parts can be enabled or disabled
 
