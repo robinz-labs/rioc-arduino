@@ -30,4 +30,7 @@ V0.25  2020/09/23
 V0.26  2020/10/12
 ! default unit id is 1
 
+V0.27  2021/10/25
+! fixed servo initial position issue
+
 

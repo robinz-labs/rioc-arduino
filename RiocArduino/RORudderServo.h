@@ -21,6 +21,7 @@ public:
 private:  
   int _pin;
   int _mode;
+  bool _enabled;
 
   Servo* _servo;
 };

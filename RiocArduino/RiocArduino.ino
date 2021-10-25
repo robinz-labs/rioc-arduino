@@ -5,7 +5,7 @@
 	Copyright 2016-2020 Robin Zhang & Labs
  	http://robinz.org/labs/
 
-	version 0.26
+	version 0.27
 
 	NOTE: Please edit file RiocOptional.h for more option settings.
 
