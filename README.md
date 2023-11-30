@@ -11,5 +11,3 @@ rioc-arduino is able to configure and drive your Arduino units to be parts in a 
 
 2. Open sketch RiocArduino.ino in Arduino IDE and upload the program to the Arduino. 
 
-3. In order to be able to remote reset Arduino, also must use a wire to connect pin 12 to the RESET pin on the Arduino board.
-

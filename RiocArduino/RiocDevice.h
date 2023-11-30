@@ -6,7 +6,7 @@
 #include "RiocUserDevice.h"
 
 #define RIOC_VERSION_MAJOR	0
-#define RIOC_VERSION_MINOR	20
+#define RIOC_VERSION_MINOR	30
 
 #if defined(__SAM3X8E__)
 

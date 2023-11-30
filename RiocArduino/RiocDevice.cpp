@@ -28,6 +28,8 @@ byte unitDescription[4] = {'R', 'I', 'O', 'C'};
 
 RiocMessager* messager;
 
+void(* resetFunc) (void) = 0; // reset the arduino
+
 bool pinOccupied[PIN_COUNT];
 RiocObject* pinObject[PIN_COUNT];
 
@@ -75,7 +77,9 @@ void initRioc(byte unitId)
   pinOccupied[19] = true;
   #endif
 
+  #ifndef OPT_SOFTWARE_RESET
   pinOccupied[PIN_RESET] = true;    // pin for wire to reset
+  #endif
 
   // ports occupied
   portOccupied[0] = true;   // rioc messager
@@ -141,9 +145,14 @@ void onMessageReceived(byte msg[8], byte address_from)
     if (msg[1]==0x01) {
 
       // reset device
+      #ifdef OPT_SOFTWARE_RESET
+      resetFunc();
+      #else
       pinMode(PIN_RESET, OUTPUT);
       digitalWrite(PIN_RESET, LOW);
       delay(200);
+      #endif
+
       byte msg[] = {0x00, 0x81, 0, 0, 0, 0, 0, 0};
       messager->sendMessage(msg, address_from); // send it only when failed to reset
     

@@ -39,6 +39,11 @@
 #endif
 
 
+// use software reset
+
+#define OPT_SOFTWARE_RESET
+
+
 // need enable the option if your arduino is an aladdin 2560 user device
 
 // #define OPT_UD_ALADDIN

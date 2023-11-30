@@ -33,4 +33,5 @@ V0.26  2020/10/12
 V0.27  2021/10/25
 ! fixed servo initial position issue
 
-
+V0.30  2023/11/23
+! use software reset, no reset pin wiring required

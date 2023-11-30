@@ -2,10 +2,10 @@
 
 	Remote IO Control for Arduino
 	
-	Copyright 2016-2020 Robin Zhang & Labs
- 	http://robinz.org/labs/
+	Copyright 2016-2023 Robin Zhang & Labs
+ 	https://github.com/robinz-labs/rioc-arduino
 
-	version 0.27
+	version 0.30
 
 	NOTE: Please edit file RiocOptional.h for more option settings.
 
