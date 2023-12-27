@@ -7,7 +7,7 @@ rioc-arduino is able to configure and drive your Arduino units to be parts in a 
 
 ## How to make a remote-controlled Arduino with RIOC ?
 
-1. Need an Arduino MEGA or UNO board.
+1. Need an Arduino MEGA or UNO, Nano board.
 
 2. Open sketch RiocArduino.ino in Arduino IDE and upload the program to the Arduino. 
 
