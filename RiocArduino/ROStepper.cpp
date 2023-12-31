@@ -59,7 +59,7 @@ bool ROStepper::setup(byte msg[8], byte address_from)
       return true;
     }
   
-  } else if (mode == STEPPER_MODE_PUL_DIR) {
+  } else if (mode == STEPPER_MODE_PUL_DIR || mode == STEPPER_MODE_PUL_DIR_) {
 
     if (pin1<=DO_PIN_MAX_NUMBER && pin2<=DO_PIN_MAX_NUMBER &&
         pin1!=pin2) {
@@ -69,7 +69,9 @@ bool ROStepper::setup(byte msg[8], byte address_from)
       _mode = mode;
 
       pinMode(_pin1, OUTPUT);
-      pinMode(_pin2, OUTPUT);    
+      pinMode(_pin2, OUTPUT);
+
+      digitalWrite(_pin1, (mode == STEPPER_MODE_PUL_DIR_ ? HIGH : LOW));
     
       return true;
     }
@@ -212,7 +214,7 @@ void ROStepper::step(unsigned int steps, int dir)
 
     _stepper->step((dir ? -1: 1) * steps);
 
-  } else if (_mode == STEPPER_MODE_PUL_DIR) {
+  } else if (_mode == STEPPER_MODE_PUL_DIR || _mode == STEPPER_MODE_PUL_DIR_) {
     
     for (int n=0 ; n<steps ; n++) {
       takeOneStep(dir);
@@ -274,6 +276,19 @@ void ROStepper::takeOneStep(int dir)
     digitalWrite(_pin1, HIGH);
     delayMicroseconds(2);
     digitalWrite(_pin1, LOW);
+    delayMicroseconds(2);
+
+  } else if (_mode == STEPPER_MODE_PUL_DIR_) {
+
+    if (dir != _dir) {
+      _dir = dir;
+      digitalWrite(_pin2, !dir);
+      delayMicroseconds(10);
+    }
+
+    digitalWrite(_pin1, LOW);
+    delayMicroseconds(2);
+    digitalWrite(_pin1, HIGH);
     delayMicroseconds(2);
   }
 }

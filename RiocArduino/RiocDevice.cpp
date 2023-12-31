@@ -268,8 +268,9 @@ RiocObject* setupRioc(byte msg[8], byte address_from)
 
     mode = msg[6];
 
-    if ((mode==STEPPER_MODE_NORMAL && pinAvailable(msg[2]) && pinAvailable(msg[3]) && pinAvailable(msg[4]) && pinAvailable(msg[5])) ||
-        (mode==STEPPER_MODE_PUL_DIR && pinAvailable(msg[2]) && pinAvailable(msg[3]))) obj = (RiocObject*)(new ROStepper());
+    if ((mode==STEPPER_MODE_NORMAL   && pinAvailable(msg[2]) && pinAvailable(msg[3]) && pinAvailable(msg[4]) && pinAvailable(msg[5])) ||
+        (mode==STEPPER_MODE_PUL_DIR  && pinAvailable(msg[2]) && pinAvailable(msg[3])) ||
+        (mode==STEPPER_MODE_PUL_DIR_ && pinAvailable(msg[2]) && pinAvailable(msg[3]))) obj = (RiocObject*)(new ROStepper());
 
   } else if (type==RO_MOTION_RUDDER) {
 
@@ -341,7 +342,7 @@ RiocObject* setupRioc(byte msg[8], byte address_from)
         pinObject[pin] = obj;
       }
 
-    } else if (type==RO_MOTION_STEPPER && mode==STEPPER_MODE_PUL_DIR) {
+    } else if (type==RO_MOTION_STEPPER && (mode==STEPPER_MODE_PUL_DIR || mode==STEPPER_MODE_PUL_DIR_)) {
 
       // two pins occupied
       for (int n=2 ; n<=3 ; n++) {

@@ -3,8 +3,9 @@
 
 #include "RiocObject.h"
 
-#define STEPPER_MODE_NORMAL  0
-#define STEPPER_MODE_PUL_DIR 1
+#define STEPPER_MODE_NORMAL   0
+#define STEPPER_MODE_PUL_DIR  1
+#define STEPPER_MODE_PUL_DIR_ 2
 
 class Stepper;
 
