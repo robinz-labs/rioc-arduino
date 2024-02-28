@@ -1,9 +1,10 @@
 #include "RORgbLed.h"
 #include "RiocMessager.h"
+#include "RiocOptional.h"
 
 #ifndef OPT_ENABLE_RGBLED
 
-// no implementation if ir receiver is disabled
+// no implementation if rgb led is disabled
 RORgbLed::RORgbLed() { }
 RORgbLed::~RORgbLed() { }
 bool RORgbLed::setup(byte msg[8], byte address_from) { return false; }
