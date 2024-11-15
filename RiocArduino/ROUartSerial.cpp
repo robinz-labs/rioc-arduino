@@ -23,7 +23,7 @@ bool ROUartSerial::setup(byte msg[8], byte address_from)
   long baud = ((long)msg[3]<<16) | ((long)msg[4]<<8) | (long)msg[5];
   int config = msg[6];
 
-  if (port>=0 && port<=UART_PORT_MAX_NUMBER) {
+  if (port>=1 && port<=UART_PORT_MAX_NUMBER) {
 
     if (baud==0 && config==0) {
       // default settings
@@ -37,14 +37,15 @@ bool ROUartSerial::setup(byte msg[8], byte address_from)
     _notifyAddress = address_from;
 
     switch (_port) {
-      case 0: _serial = &Serial;  break;
+      //case 0: _serial = &Serial;  break;
 
       #if defined(__SAM3X8E__) || defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
       case 1: _serial = &Serial1; break;
       case 2: _serial = &Serial2; break;
       case 3: _serial = &Serial3; break;
+      #elif defined(__AVR_ATmega32U4__)
+      case 1: _serial = &Serial1; break;
       #endif
-
     }
     
     #if defined (__SAM3X8E__)

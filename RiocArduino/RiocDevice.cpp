@@ -77,7 +77,7 @@ void initRioc(byte unitId)
   pinOccupied[19] = true;
   #endif
 
-  #ifndef OPT_SOFTWARE_RESET
+  #ifdef PIN_RESET
   pinOccupied[PIN_RESET] = true;    // pin for wire to reset
   #endif
 
@@ -106,7 +106,7 @@ void initRioc(byte unitId)
     unitDescription[0], unitDescription[1], 
     unitDescription[2], unitDescription[3]
   };
-  messager->sendMessage(msg, 0);       
+  messager->sendMessage(msg, 0);
 
   // init others for user device
   initUserDevice();
@@ -144,17 +144,36 @@ void onMessageReceived(byte msg[8], byte address_from)
 
     if (msg[1]==0x01) {
 
-      // reset device
-      #ifdef OPT_SOFTWARE_RESET
-      resetFunc();
-      #else
-      pinMode(PIN_RESET, OUTPUT);
-      digitalWrite(PIN_RESET, LOW);
-      delay(200);
-      #endif
+      // rioc reset message
 
-      byte msg[] = {0x00, 0x81, 0, 0, 0, 0, 0, 0};
-      messager->sendMessage(msg, address_from); // send it only when failed to reset
+      #ifdef OPT_USB_VIRTUAL_SERIAL
+
+        // limitations of the board that uses an USB virtual serial port: 
+        // resetting the device will cause the serial connection to terminate !!
+
+        // alternative:
+        // no longer reset device here, unable to clear IO pin configurations by calling a RIOC reset message.
+        // if you need to clear the IO pin configurations, you must manually reset the device power.
+
+        // just send a fake reset message in response
+        byte msg[] = {0x00, 0x8f, 0, 0, 0, 0, 0, 0};
+        messager->sendMessage(msg, address_from); 
+
+      #else
+
+        // reset device to clear all existing IO pin configurations
+        #ifdef PIN_RESET
+        pinMode(PIN_RESET, OUTPUT);
+        digitalWrite(PIN_RESET, LOW);
+        delay(200);
+        #endif
+
+        resetFunc();
+
+        byte msg[] = {0x00, 0x81, 0, 0, 0, 0, 0, 0};
+        messager->sendMessage(msg, address_from); // send it only when failed to reset
+
+      #endif
     
     } else if (msg[1]==0x02) {
       

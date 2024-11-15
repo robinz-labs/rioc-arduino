@@ -38,3 +38,7 @@ V0.30  2023/11/23
 
 v0.31  2024/01/01
 ! updated stepper control for PUL- DIR- mode
+
+V0.40  2024/11/15
++ added support for ESP32, RP2040 and more boards
+

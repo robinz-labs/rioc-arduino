@@ -1,6 +1,11 @@
 #include "RORudderServo.h"
 #include "RiocMessager.h"
+
+#ifdef ARDUINO_ARCH_ESP32
+#include <ESP32Servo.h>
+#else
 #include <Servo.h>
+#endif
 
 RORudderServo::RORudderServo()
 {

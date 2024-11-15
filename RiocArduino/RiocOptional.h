@@ -39,9 +39,12 @@
 #endif
 
 
-// use software reset
+// need enable the option if the board uses an USB virtual serial port for RIOC messaging,
+// such as Arduino Leonardo, Micro or Raspberry Pi Pico, etc.
 
-#define OPT_SOFTWARE_RESET
+#if defined(__AVR_ATmega32U4__) || defined(ARDUINO_ARCH_RP2040) 
+	#define OPT_USB_VIRTUAL_SERIAL
+#endif
 
 
 // need enable the option if your arduino is an aladdin 2560 user device

@@ -5,19 +5,20 @@
 	Copyright 2016-2024 Robin Zhang & Labs
  	https://github.com/robinz-labs/rioc-arduino
 
-	version 0.31
+	version 0.40
 
 	NOTE: Please edit file RiocOptional.h for more option settings.
 
-	This program has been tested with Arduino UNO, Duemilanove, Nano, MEGA and DUE, 
-	other Arduino boards may not be supported.
-  
+	This program has been tested with Arduino UNO, Duemilanove, Nano, MEGA and DUE. 
+
+	This version is also partially compatible with some other types of boards, 
+	such as ESP32 and RP2040.
+
 */
 
 
-
-// UNIT_ID can be set as a number between 1 ~ 254
-// the unit ID can be also reconfigurable by remote if here set UNIT_ID as 0
+// UNIT_ID can be set to a number between 1 and 254
+// If UNIT_ID is set to 0 here, the unit ID can also be reconfigured remotely later
 
 #define UNIT_ID 1
 

@@ -6,30 +6,7 @@
 #include "RiocUserDevice.h"
 
 #define RIOC_VERSION_MAJOR	0
-#define RIOC_VERSION_MINOR	31
-
-#if defined(__SAM3X8E__)
-
-#define PIN_COUNT 70
-#define PORT_COUNT 4
-
-#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-
-#define PIN_COUNT 70
-#define PORT_COUNT 4
-
-#else
-
-#define PIN_COUNT 22
-#define PORT_COUNT 1
-
-#endif
-
-#if defined(PIN_UD_RESET)
-#define PIN_RESET PIN_UD_RESET
-#else
-#define PIN_RESET 12
-#endif
+#define RIOC_VERSION_MINOR	40
 
 #define RO_GENERAL_DIGITAL_IN		    0x01
 #define RO_GENERAL_DIGITAL_OUT		    0x02

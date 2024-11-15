@@ -7,26 +7,63 @@
 
 #if defined(__SAM3X8E__)
 
-#define DI_PIN_MAX_NUMBER A11 
-#define DO_PIN_MAX_NUMBER A11 
-#define AI_PIN_MAX_NUMBER A11 
-#define AO_PIN_MIN_NUMBER DAC0
-#define AO_PIN_MAX_NUMBER DAC1
-#define UART_PORT_MAX_NUMBER 3
+// arduino due
+#define PIN_COUNT 79
+#define PORT_COUNT 4
 
 #elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
 
-#define DI_PIN_MAX_NUMBER A15
-#define DO_PIN_MAX_NUMBER A15
-#define AI_PIN_MAX_NUMBER A15
-#define UART_PORT_MAX_NUMBER 3
+// arduino mega
+#define PIN_COUNT 70
+#define PORT_COUNT 4
+
+#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega_328__)
+
+// arduino uno 
+// arduino nano
+#define PIN_COUNT 22
+#define PORT_COUNT 1
+
+#elif defined(__AVR_ATmega32U4__)
+
+// arduino leonardo
+// arduino micro
+#define PIN_COUNT 31
+#define PORT_COUNT 2
 
 #else
 
-#define DI_PIN_MAX_NUMBER A7
-#define DO_PIN_MAX_NUMBER A7
+// general
+#define PIN_COUNT 50
+#define PORT_COUNT 1
+
+#endif
+
+#define DI_PIN_MAX_NUMBER (PIN_COUNT-1)
+#define DO_PIN_MAX_NUMBER (PIN_COUNT-1)
+#define UART_PORT_MAX_NUMBER (PORT_COUNT-1)
+
+#if defined(__SAM3X8E__)
+
+#define AI_PIN_MAX_NUMBER A11 
+#define AO_PIN_MIN_NUMBER DAC0
+#define AO_PIN_MAX_NUMBER DAC1
+
+#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+
+#define AI_PIN_MAX_NUMBER A15
+
+#elif defined(__AVR_ATmega168__) || defined(__AVR_ATmega328P__) || defined(__AVR_ATmega_328__)
+
 #define AI_PIN_MAX_NUMBER A7
-#define UART_PORT_MAX_NUMBER 0
+
+#elif defined(__AVR_ATmega32U4__)
+
+#define AI_PIN_MAX_NUMBER A11
+
+#else
+
+#define AI_PIN_MAX_NUMBER DI_PIN_MAX_NUMBER
 
 #endif
 
