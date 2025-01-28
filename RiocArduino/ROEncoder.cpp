@@ -8,6 +8,8 @@ ROEncoder::ROEncoder()
   _mode = -1;
 
   _value = 0;
+  _rangeLower = -0xffffff;
+  _rangeUpper =  0xffffff;
   _sampleInterval = 0;
   _lastSampleTime = micros();
   _valA = HIGH;
@@ -111,6 +113,30 @@ void ROEncoder::execute(byte msg[8], byte address_from)
       if (_messager!=NULL) _messager->sendMessage(rsp, address_from);
     }
 
+  } else if (cmd==0x05) {
+    
+    // SET RANGE LOWER
+    byte sig = (msg[3] ? 1 : 0);
+    long val = ((long)msg[4]<<16) | ((long)msg[5]<<8) | (long)msg[6];
+    _rangeLower = (sig ? -1 : 1)*val;
+    
+    if (!isSilent()) {
+      byte rsp[] = {0x21, 0x85, _pinA, sig, val>>16, val>>8, val & 0xff, 0};
+      if (_messager!=NULL) _messager->sendMessage(rsp, address_from);
+    }
+
+  } else if (cmd==0x06) {
+    
+    // SET RANGE UPPER
+    byte sig = (msg[3] ? 1 : 0);
+    long val = ((long)msg[4]<<16) | ((long)msg[5]<<8) | (long)msg[6];
+    _rangeUpper = (sig ? -1 : 1)*val;
+    
+    if (!isSilent()) {
+      byte rsp[] = {0x21, 0x86, _pinA, sig, val>>16, val>>8, val & 0xff, 0};
+      if (_messager!=NULL) _messager->sendMessage(rsp, address_from);
+    }
+
   }
 }
 
@@ -126,7 +152,7 @@ void ROEncoder::process()
     int turn = getEncoderTurn();
     if (turn!=0) {
       _value += (long)turn; 
-      _value = constrain(_value, -0xffffff, 0xffffff);
+      _value = constrain(_value, _rangeLower, _rangeUpper);
     } 
   }
 

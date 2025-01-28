@@ -6,7 +6,7 @@
 #include "RiocUserDevice.h"
 
 #define RIOC_VERSION_MAJOR	0
-#define RIOC_VERSION_MINOR	40
+#define RIOC_VERSION_MINOR	41
 
 #define RO_GENERAL_DIGITAL_IN		    0x01
 #define RO_GENERAL_DIGITAL_OUT		    0x02

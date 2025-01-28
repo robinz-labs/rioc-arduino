@@ -22,6 +22,8 @@ private:
   int _mode;
 
   long _value;
+  long _rangeLower;
+  long _rangeUpper;
   unsigned int _sampleInterval;
   unsigned long _lastSampleTime;
   int _valA;
