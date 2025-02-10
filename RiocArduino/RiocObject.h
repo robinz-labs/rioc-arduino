@@ -2,6 +2,7 @@
 #define LIB_RIOC_OBJECT_H_
 
 #include <Arduino.h>
+#include "RiocOptional.h"
 
 #pragma GCC diagnostic ignored "-Wnarrowing"
 
@@ -37,6 +38,13 @@
 #define PIN_COUNT 50
 #define PORT_COUNT 1
 
+#endif
+
+// user channel
+#ifdef USER_CHANNEL_COUNT
+#define CHANNEL_COUNT USER_CHANNEL_COUNT
+#else
+#define CHANNEL_COUNT 16
 #endif
 
 #define DI_PIN_MAX_NUMBER (PIN_COUNT-1)

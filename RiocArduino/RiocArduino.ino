@@ -22,8 +22,6 @@
 
 #define UNIT_ID 1
 
-
-
 #include "RiocDevice.h"
 
 void setup()

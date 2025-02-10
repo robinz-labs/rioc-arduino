@@ -23,6 +23,7 @@
 #include "RORgbLed.h"
 #include "ROIrTransmitter.h"
 #include "ROIrReceiver.h"
+#include "ROUserChannel.h"
 
 byte unitDescription[4] = {'R', 'I', 'O', 'C'};
 
@@ -36,10 +37,17 @@ RiocObject* pinObject[PIN_COUNT];
 bool portOccupied[PORT_COUNT];
 RiocObject* portObject[PORT_COUNT];
 
+bool channelOccupied[CHANNEL_COUNT];
+RiocObject* channelObject[CHANNEL_COUNT];
+
 bool pinAvailable(int pin) { return (pin < PIN_COUNT && !pinOccupied[pin]); }
-bool portAvailable(int port) { return (port < PORT_COUNT && !portOccupied[port]); }
 bool pinManaged(int pin) { return (pin < PIN_COUNT && pinObject[pin]!=NULL); }
-bool portManaged(int port)  { return (port < PORT_COUNT && portObject[port]!=NULL); }
+
+bool portAvailable(int port) { return (port < PORT_COUNT && !portOccupied[port]); }
+bool portManaged(int port) { return (port < PORT_COUNT && portObject[port]!=NULL); }
+
+bool channelAvailable(int channel) { return (channel < CHANNEL_COUNT && !channelOccupied[channel]); }
+bool channelManaged(int channel) { return (channel < CHANNEL_COUNT && channelObject[channel]!=NULL); }
 
 bool pinsAvailable(int pin, int number) {
     for (int n=0; n<number ; n++) {
@@ -62,6 +70,10 @@ void initRioc(byte unitId)
   for (int n=0 ; n<PORT_COUNT ; n++) {
     portOccupied[n] = false;    
     portObject[n] = NULL;
+  }
+  for (int n=0 ; n<CHANNEL_COUNT ; n++) {
+    channelOccupied[n] = false;
+    channelObject[n] = NULL;
   }
   
   // pins occupied
@@ -124,6 +136,9 @@ void processRioc()
   }
   for (int n=0 ; n<PORT_COUNT ; n++) {
     if (portObject[n] != NULL) portObject[n]->process();
+  }
+  for (int n=0 ; n<CHANNEL_COUNT ; n++) {
+    if (channelObject[n] != NULL) channelObject[n]->process();
   }
 
   // do more things for user device
@@ -322,6 +337,11 @@ RiocObject* setupRioc(byte msg[8], byte address_from)
   } else if (type==RO_IR_RECEIVER) {
 
     if (pinAvailable(msg[2])) obj = (RiocObject*)(new ROIrReceiver());
+
+  } else if (type==RO_USER_CHANNEL) {
+
+    if (channelAvailable(msg[2])) obj = (RiocObject*)(new ROUserChannel());
+
   }
 
   // setup object
@@ -336,7 +356,14 @@ RiocObject* setupRioc(byte msg[8], byte address_from)
   // set occupied pin or port
   if (obj != NULL) {
 
-    if (type==RO_GENERAL_UART_SERIAL) {
+    if (type==RO_USER_CHANNEL) {
+
+      // one channel occupied
+      int channel = msg[2];
+      channelOccupied[channel] = true;
+      channelObject[channel] = obj;
+
+    } else if (type==RO_GENERAL_UART_SERIAL) {
 
       // one port occupied
       int port = msg[2];
@@ -413,7 +440,14 @@ void executeRioc(byte msg[8], byte address_from)
     int type = msg[0];
     int cmd = msg[1];
 
-    if (type == RO_GENERAL_UART_SERIAL) {
+    if (type == RO_USER_CHANNEL) {
+      int channel = msg[2];
+      if (channelManaged(channel))
+        if (cmd>=0x70)
+          channelObject[channel]->executeReserved(msg, address_from);
+        else
+          channelObject[channel]->execute(msg, address_from);
+    } else if (type == RO_GENERAL_UART_SERIAL) {
       int port = msg[2];
       if (portManaged(port)) 
         if (cmd>=0x70)

@@ -1,13 +1,3 @@
-/*
-    Optional parts can be enabled or disabled
-
-	Arduino UNO, Nano or any others with ATmega328 MCU has only 32K bytes for program storage.
-	You can edit file RiocOptional.h to disable some optional parts when you need recompile 
-	the program for a smaller storage space occupied in Arduino.
-
-	If your Arduino is a MEGA 1280 / 2560, please just compile the program with keeping all 
-	OPT_ENABLE options on.
-*/
 
 // library Adafruit_NeoPixel is required to enable option RGBLED
 // http://github.com/adafruit/Adafruit_NeoPixel
@@ -50,3 +40,9 @@
 // need enable the option if your arduino is an aladdin 2560 user device
 
 // #define OPT_UD_ALADDIN
+
+
+// set the number of user channels,
+// user channels are usually used by the user device to communicate with the remote app.
+
+#define USER_CHANNEL_COUNT 32
